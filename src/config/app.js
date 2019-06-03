@@ -11,7 +11,6 @@ const cors = require('cors')
 const swaggerDocument = require('./swagger.json')
 const routes = require('../routes')
 const {
-  authenticate,
   logging,
   serverError
 } = require('../middleware')
@@ -25,7 +24,6 @@ app.use(compression())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-app.use(authenticate(false))
 app.use('/api', routes)
 app.use(serverError())
 
