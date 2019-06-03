@@ -1,7 +1,7 @@
 const http = require('http')
 
 const app = require('./app')
-const log = require('../helpers/logger').create('server')
+const log = require('../helpers/logger').getInstance('server')
 
 const server = http.createServer(app)
 
@@ -26,7 +26,7 @@ function onError (error) {
     throw error
   }
 
-  log.error(error.message, ...error)
+  log.error(error)
   process.exit(1)
 }
 
