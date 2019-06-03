@@ -1,7 +1,7 @@
 const path = require('path')
 const winston = require('winston')
 
-const env = process.env.NODE_ENV || 'local'
+const env = process.env.NODE_ENV || 'development'
 const level = env === 'production' ? 'info' : 'silly'
 
 function create (serviceName) {
@@ -16,10 +16,10 @@ function create (serviceName) {
     ]
   })
 
-  if (env === 'local') {
+  if (env === 'development') {
     logger.add(
       new winston.transports.File({
-        filename: 'scheduler.log',
+        filename: 'gastarme.log',
         dirname: path.resolve(__dirname, '..', '..')
       })
     )
