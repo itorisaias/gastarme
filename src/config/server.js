@@ -1,7 +1,10 @@
 const http = require('http')
+
 const app = require('./app')
+const log = require('../helpers/logger').create('server')
 
 const server = http.createServer(app)
+
 server.on('listening', onListening)
 server.on('error', onError)
 
@@ -14,11 +17,17 @@ function onListening () {
     address,
     port
   } = server.address()
-  console.log(`listenig in ${address}:${port}`)
+
+  log.info(`listening ${address}:${port}`)
 }
 
 function onError (error) {
-  console.log(error)
+  if (error.syscall !== 'listen') {
+    throw error
+  }
+
+  log.error(error.message, ...error)
+  process.exit(1)
 }
 
 module.exports = {
