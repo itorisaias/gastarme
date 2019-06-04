@@ -14,7 +14,8 @@ const swaggerDocument = require('./swagger.json')
 const routes = require('../routes')
 const {
   logging,
-  serverError
+  serverError,
+  authenticate
 } = require('../middleware')
 
 const app = express()
@@ -30,6 +31,7 @@ app.use(helmet())
 app.use(compression())
 app.use(bodyParser.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use(authenticate())
 app.use(acl.authorize.unless({
   path: [
     '/api/auth/sign_in',
