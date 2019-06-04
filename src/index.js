@@ -1,3 +1,3 @@
 const server = require('./config/server')
 
-server.start()
+server.start(process.env.PORT || 3000)

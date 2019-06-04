@@ -1,24 +1,34 @@
 const http = require('http')
+
 const app = require('./app')
+const log = require('../helpers/logger').getInstance('server')
 
-const PORT = process.env.PORT || 3000
 const server = http.createServer(app)
-
-function onListening () {
-  const { address, port } = server.address()
-  console.log(`listenig in ${address}:${port}`)
-}
-
-function onError (error) {
-  console.log(error)
-}
-
-function start () {
-  server.listen(PORT)
-}
 
 server.on('listening', onListening)
 server.on('error', onError)
+
+function start (port) {
+  server.listen(port)
+}
+
+function onListening () {
+  const {
+    address,
+    port
+  } = server.address()
+
+  log.info(`listening ${address}:${port}`)
+}
+
+function onError (error) {
+  if (error.syscall !== 'listen') {
+    throw error
+  }
+
+  log.error(error)
+  process.exit(1)
+}
 
 module.exports = {
   start
