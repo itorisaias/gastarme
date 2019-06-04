@@ -1,7 +1,7 @@
 const http = require('http')
 
 const app = require('./app')
-const log = require('../helpers/logger').getInstance('server')
+const log = require('../utils/logger').getInstance('server')
 
 const server = http.createServer(app)
 

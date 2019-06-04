@@ -2,7 +2,7 @@ const os = require('os')
 
 const morgan = require('morgan')
 
-const log = require('../utils/logger').create('api')
+const log = require('../utils/logger').getInstance('api')
 
 morgan.token('conversation-id', function getConversationId (req) {
   return req.conversationId
@@ -38,16 +38,7 @@ function jsonFormat (tokens, req, res) {
     pid: tokens['pid'](req, res)
   }
 
-  const NOT_NEED_LOG = [
-    { method: 'GET', path: '/healthcheck' }
-  ]
-
-  const { path, method } = req
-  const found = NOT_NEED_LOG.find(element => ((element.method === method) && (element.path === path)))
-
-  if (!found) {
-    log.debug(request)
-  }
+  log.debug(request)
 }
 
 module.exports = () => morgan(jsonFormat)

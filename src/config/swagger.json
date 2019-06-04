@@ -1,25 +1,24 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is a sample server.",
+    "description": "This is a sample server Petstore server",
     "version": "1.0.0",
-    "title": "Swagger Gastarme",
-    "contact": {
-      "email": "itor.isaias@gmail.com"
-    }
+    "title": "Swagger Pagarme"
   },
   "host": "localhost:3000",
   "basePath": "/api",
-  "tags": [{
-    "name": "user",
-    "description": "Operations about user"
-  }],
-  "schemes": [
-    "http",
-    "https"
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
   ],
   "paths": {
-    "/users": {
+    "/user": {
       "post": {
         "tags": [
           "user"
@@ -28,109 +27,10 @@
         "description": "This can only be done by the logged in user.",
         "operationId": "createUser",
         "produces": [
+          "application/xml",
           "application/json"
         ],
-        "parameters": [{
-          "in": "body",
-          "name": "body",
-          "description": "Created user object",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/User"
-          }
-        }],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        },
-        "security": [{
-          "api_key": []
-        }]
-      },
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Finds Users",
-        "operationId": "findAllUsers",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid status value"
-          }
-        },
-        "security": [{
-          "api_key": []
-        }]
-      }
-    },
-    "/users/{userId}": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Find user by ID",
-        "description": "Returns a single user",
-        "operationId": "getUserById",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "userId",
-          "in": "path",
-          "description": "ID of user to return",
-          "required": true,
-          "type": "integer",
-          "format": "int64"
-        }],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        },
-        "security": [{
-          "api_key": []
-        }]
-      },
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Updates a user in the store",
-        "description": "",
-        "operationId": "updateUser",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-            "name": "userId",
-            "in": "path",
-            "description": "ID of user that needs to be updated",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
+        "parameters": [
           {
             "in": "body",
             "name": "body",
@@ -142,65 +42,40 @@
           }
         ],
         "responses": {
-          "405": {
-            "description": "Invalid input"
+          "default": {
+            "description": "successful operation"
           }
-        },
-        "security": [{
-          "api_key": []
-        }]
-      },
-      "delete": {
+        }
+      }
+    },
+    "/user/login": {
+      "get": {
         "tags": [
           "user"
         ],
-        "summary": "Deletes a user",
-        "description": "",
-        "operationId": "deleteUser",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "userId",
-          "in": "path",
-          "description": "User id to delete",
-          "required": true,
-          "type": "integer",
-          "format": "int64"
-        }],
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        },
-        "security": [{
-          "api_key": []
-        }]
-      }
-    },
-    "/auth": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Login in system",
+        "summary": "Logs user into the system",
         "description": "",
         "operationId": "loginUser",
         "produces": [
+          "application/xml",
           "application/json"
         ],
-        "parameters": [{
-          "in": "body",
-          "name": "body",
-          "description": "Created user object",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/User"
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "type": "string"
           }
-        }],
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -225,12 +100,37 @@
           }
         }
       }
+    },
+    "/user/logout": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
     "api_key": {
       "type": "apiKey",
-      "name": "authorization",
+      "name": "x-api-key",
+      "in": "header"
+    },
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
       "in": "header"
     }
   },
@@ -242,7 +142,13 @@
           "type": "integer",
           "format": "int64"
         },
-        "name": {
+        "username": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
           "type": "string"
         },
         "email": {
@@ -250,11 +156,23 @@
         },
         "password": {
           "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "userStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "User Status"
         }
       },
-      "json": {
+      "xml": {
         "name": "User"
       }
     }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
   }
 }
