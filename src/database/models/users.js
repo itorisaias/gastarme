@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     recovery_code: {
       type: DataTypes.STRING
     },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'user'
+    },
     recovery_code_at: {
       type: DataTypes.DATE,
       defaultValue: sequelize.NOW
