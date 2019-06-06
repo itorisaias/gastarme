@@ -15,9 +15,10 @@ function authenticate (req, res, next) {
       }
 
       req.decoded = decoded
-      next()
     })
   }
+
+  next()
 }
 
 module.exports = () => authenticate
