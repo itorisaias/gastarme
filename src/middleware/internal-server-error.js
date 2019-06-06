@@ -47,9 +47,6 @@ function extrairMensagem (error) {
 }
 
 function internalServerError (err, req, res, next) {
-  if (err === null) {
-    return next()
-  }
   res.status(err.statusCode || 400).json({
     errors: handleError(err)
   })
