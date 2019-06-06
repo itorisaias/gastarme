@@ -36,7 +36,12 @@ class AuthService {
             where: { email }
           })
       })
-      .then(rowsUpdated => (rowsUpdated[0] >= 1))
+      .then(rowsUpdated => {
+        if (rowsUpdated[0] >= 1) {
+          return true
+        }
+        return false
+      })
   }
 }
 
