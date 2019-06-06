@@ -13,9 +13,9 @@
     "group": "user",
     "permissions": [
       {
-        "resource": "admin",
+        "resource": "*",
         "methods": "*",
-        "action": "deny"
+        "action": "allow"
       }
     ]
   }
