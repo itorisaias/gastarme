@@ -1,8 +1,4 @@
-const path = require('path')
 const winston = require('winston')
-
-const env = process.env.NODE_ENV || 'development'
-const level = env === 'production' ? 'info' : 'silly'
 
 class Logger {
   constructor (lib = winston) {
@@ -10,6 +6,8 @@ class Logger {
   }
 
   getInstance (nameService) {
+    const level = this.getLevel(process.env.NODE_ENV)
+
     const logger = this.lib.createLogger({
       level,
       format: winston.format.json(),
@@ -21,17 +19,24 @@ class Logger {
       ]
     })
 
-    if (env === 'development') {
-      logger.add(
-        new winston.transports.File({
-          filename: 'gastarme.log',
-          dirname: path.resolve(__dirname, '..', '..')
-        })
-      )
-    }
-
     return logger
+  }
+
+  getLevel (env) {
+    switch (env) {
+      case 'test':
+        return 'error'
+      case 'production':
+        return 'info'
+      case 'staging':
+        return 'info'
+      case 'development':
+        return 'debug'
+      default:
+        return 'silly'
+    }
   }
 }
 
 module.exports = new Logger(winston)
+module.exports.Logger = Logger
