@@ -8,7 +8,10 @@ class UsersController {
 
     return this.UserModel
       .findOne({ where: { id } })
-      .then(user => res.send(user))
+      .then(user => {
+        const { id, name, email, role } = user
+        res.send({ id, name, email, role })
+      })
       .catch(next)
   }
 
