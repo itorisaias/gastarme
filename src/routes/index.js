@@ -1,9 +1,13 @@
 const router = require('express').Router()
 
-const userRouter = require('./users')
 const authRouter = require('./auth')
+const cardRouter = require('./cards')
+const productRouter = require('./products')
+const transactionRouter = require('./transactions')
 
-router.use('/users', userRouter)
 router.use('/auth', authRouter)
+router.use('/cards', cardRouter)
+router.use('/products', productRouter)
+router.use('/transactions', transactionRouter)
 
 module.exports = router

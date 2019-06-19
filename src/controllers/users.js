@@ -1,23 +1,21 @@
 class UsersController {
-  constructor (UserModel) {
-    this.UserModel = UserModel
+  constructor (UserService) {
+    this.UserService = UserService
   }
 
-  getById (req, res, next) {
-    const { params: { id } } = req
+  findOne (req, res, next) {
+    const { id } = req.params
 
-    return this.UserModel
+    return this.UserService
       .findOne({ where: { id } })
-      .then(user => {
-        const { id, name, email, role } = user
-        res.send({ id, name, email, role })
-      })
+      .then(user => res.send(user))
       .catch(next)
   }
 
   update (req, res, next) {
     const { params: { id } } = req
-    return this.UserModel
+
+    return this.UserService
       .update(req.body, { where: { id } })
       .then(() => res.sendStatus(200))
       .catch(next)

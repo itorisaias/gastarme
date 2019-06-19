@@ -5,20 +5,15 @@ const log = require('../utils/logger').getInstance('server')
 class Server {
   constructor (app) {
     this.server = http.createServer(app)
-    this.server.on('listening', this.onListening)
-    this.server.on('error', this.onError)
   }
 
   start (port) {
     this.server.listen(port)
+    this.server.on('listening', () => this.onListening(this.server.address()))
+    this.server.on('error', this.onError)
   }
 
-  onListening () {
-    const {
-      address,
-      port
-    } = this.server.address()
-
+  onListening ({ port, address }) {
     log.info(`listening ${address}:${port}`)
   }
 

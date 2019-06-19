@@ -3,3 +3,13 @@ const app = require('./config/app')
 
 const server = new Server(app)
 server.start(process.env.PORT || 3000)
+// const faker = require('faker')
+// const axios = require('axios')
+// const moment = require('moment')
+// const gc = require('validator/lib/isCreditCard')
+// const val = require('creditcard-generator')
+// console.log(faker.date.future().toJSON())
+// const value = '07/06/19'
+// moment(new Date(monthYear[1], monthYear[0], 1)).isBefore(new Date())
+// console.log(val.GenCC('VISA')[0])
+// console.log(gc(val.GenCC()[0]))

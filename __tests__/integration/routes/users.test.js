@@ -16,6 +16,7 @@ describe('Routes: /users', () => {
         .get(`/api/users/${user.id}`)
         .set('Authorization', `Bearer ${user.generateToken()}`)
 
+      // console.log(response)
       expect(response.status).toBe(200)
     })
   })

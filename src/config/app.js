@@ -2,6 +2,7 @@ require('dotenv').config({
   path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
 })
 
+const path = require('path')
 const express = require('express')
 const compression = require('compression')
 const bodyParser = require('body-parser')
@@ -9,8 +10,9 @@ const helmet = require('helmet')
 const acl = require('express-acl')
 const swaggerUi = require('swagger-ui-express')
 const cors = require('cors')
+const YAML = require('yamljs')
 
-const swaggerDocument = require('./swagger.json')
+const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'))
 const routes = require('../routes')
 const {
   logging,
