@@ -18,7 +18,9 @@
     "test": "NODE_ENV=test jest",
     "posttest": "NODE_ENV=test npm run migrate:rollback",
     "migrate:latest": "sequelize db:migrate",
-    "migrate:rollback": "sequelize db:migrate:undo:all"
+    "migrate:rollback": "sequelize db:migrate:undo:all",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -37,7 +39,8 @@
     "pg": "^7.11.0",
     "sequelize": "^5.8.7",
     "swagger-ui-express": "^4.0.5",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
@@ -52,5 +55,6 @@
     "sequelize-cli": "^5.4.0",
     "sqlite3": "^4.0.8",
     "supertest": "^4.0.2"
-  }
+  },
+  "snyk": true
 }
